@@ -73,15 +73,12 @@ for categoria, productos in PRODUCTOS_POR_CATEGORIA.items():
     st.write(f"### {categoria}")
     
     for producto in productos:
-        # Creamos dos columnas: una ancha para el nombre y una estrecha para la cantidad
         col1, col2 = st.columns([3, 1])
         
         with col1:
-            # Ponemos el nombre del producto alineado de forma bonita
             st.markdown(f"<div class='producto-label'>{producto}</div>", unsafe_allow_html=True)
             
         with col2:
-            # Selector de cantidad (0 por defecto, paso de 1 en 1)
             cantidad = st.number_input(
                 label=f"Cantidad para {producto}",
                 min_value=0,
@@ -89,17 +86,15 @@ for categoria, productos in PRODUCTOS_POR_CATEGORIA.items():
                 value=0,
                 step=1,
                 key=f"cant_{producto}",
-                label_visibility="collapsed" # Esconde el texto del label para que no estorbe
+                label_visibility="collapsed"
             )
         
-        # Si la cantidad es mayor que 0, lo añadimos a la lista final
+        # Si la cantidad es mayor que 0, lo añadimos a la lista final (sin el guion "-")
         if cantidad > 0:
-            # Si es 1, podemos omitir el número para que quede más limpio, o dejarlo. 
-            # He puesto que si es más de 1, muestre la cantidad al lado.
             if cantidad == 1:
-                productos_seleccionados.append(f"- {producto}")
+                productos_seleccionados.append(f"{producto}")
             else:
-                productos_seleccionados.append(f"- {producto} ({cantidad}x)")
+                productos_seleccionados.append(f"{producto} ({cantidad}x)")
 
 st.write("---")
 
@@ -107,10 +102,8 @@ st.write("---")
 if productos_seleccionados:
     st.subheader("📝 Tu Lista Generada")
     
-    # Unimos todo en un solo texto con saltos de línea
     texto_final = "\n".join(productos_seleccionados)
     
-    # Mostramos el cuadro de texto
     st.text_area("Toca dentro, selecciona todo y copia:", value=texto_final, height=180)
     st.info("💡 ¡Listo! Ahora solo tienes que pegar este texto en tu nota de Google Keep.")
 else:
