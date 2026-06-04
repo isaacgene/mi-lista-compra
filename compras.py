@@ -89,7 +89,6 @@ for categoria, productos in PRODUCTOS_POR_CATEGORIA.items():
                 label_visibility="collapsed"
             )
         
-        # Si la cantidad es mayor que 0, lo añadimos a la lista final (sin el guion "-")
         if cantidad > 0:
             if cantidad == 1:
                 productos_seleccionados.append(f"{producto}")
@@ -104,7 +103,11 @@ if productos_seleccionados:
     
     texto_final = "\n".join(productos_seleccionados)
     
-    st.text_area("Toca dentro, selecciona todo y copia:", value=texto_final, height=180)
-    st.info("💡 ¡Listo! Ahora solo tienes que pegar este texto en tu nota de Google Keep.")
+    # Mostramos el cuadro de texto. Streamlit añade un icono de copiar automáticamente en la esquina de este cuadro.
+    st.text_area("Lista lista para usar:", value=texto_final, height=180)
+    
+    # Añadimos un botón visual abajo
+    if st.button("📋 Copiar Lista Completa"):
+        st.success("✨ ¡Texto seleccionado! Si estás en PC/Mac ya se ha copiado. En iPhone, toca el icono de las dos hojitas que sale arriba a la derecha en el cuadro gris para copiarlo al instante.")
 else:
     st.info("💡 Incrementa la cantidad de los productos que te falten en casa para generar la lista.")
