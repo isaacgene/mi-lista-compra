@@ -14,18 +14,27 @@ st.markdown("""
         align-items: center;
         height: 100%;
     }
-    /* Estilo para el botón principal */
-    .stButton button {
-        width: 100%;
-        background-color: #4CAF50 !important;
-        color: white !important;
-        font-size: 1.1rem !important;
-        padding: 10px !important;
-    }
     /* Reducir espacio entre elementos para que quepa más en la pantalla */
     .block-container {
         padding-top: 2rem !important;
         padding-bottom: 2rem !important;
+    }
+    /* Estilo para nuestro nuevo botón real de copiar */
+    .boton-copiar {
+        width: 100%;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        padding: 12px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        border-radius: 8px;
+        cursor: pointer;
+        text-align: center;
+        box-shadow: 0px 4px 6px rgba(0,0,0,0.1);
+    }
+    .boton-copiar:active {
+        background-color: #45a049;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -97,17 +106,52 @@ for categoria, productos in PRODUCTOS_POR_CATEGORIA.items():
 
 st.write("---")
 
-# 3. Generar el bloque de texto para copiar
+# 3. Generar el bloque de texto y el botón de copiar real
 if productos_seleccionados:
     st.subheader("📝 Tu Lista Generada")
     
     texto_final = "\n".join(productos_seleccionados)
     
-    # Mostramos el cuadro de texto. Streamlit añade un icono de copiar automáticamente en la esquina de este cuadro.
-    st.text_area("Lista lista para usar:", value=texto_final, height=180)
+    # Mostramos la lista en un cuadro de texto normal para que la veas
+    st.text_area("Tu lista actual:", value=texto_final, height=150, disabled=True)
     
-    # Añadimos un botón visual abajo
-    if st.button("📋 Copiar Lista Completa"):
-        st.success("✨ ¡Texto seleccionado! Si estás en PC/Mac ya se ha copiado. En iPhone, toca el icono de las dos hojitas que sale arriba a la derecha en el cuadro gris para copiarlo al instante.")
+    # TRUCO: Inyectamos un botón nativo de HTML/JavaScript. 
+    # Este código se ejecuta 100% en tu iPhone y SÍ tiene permiso para copiar al portapapeles.
+    componente_copiar_html = f"""
+    <input type="hidden" id="textoParaCopiar" value="{texto_final}">
+    <button class="boton-copiar" onclick="copiarAlPortapapeles()">📋 COPIAR LISTA COMPLETA</button>
+
+    <script>
+    function copiarAlPortapapeles() {{
+        var text = document.getElementById("textoParaCopiar").value;
+        
+        // Intento con la API moderna de portapapeles
+        if (navigator.clipboard && navigator.clipboard.writeText) {{
+            navigator.clipboard.writeText(text).then(function() {{
+                alert("✨ ¡Lista copiada al portapapeles! Ya puedes ir a Google Keep y pegar.");
+            }}).catch(function(err) {{
+                alert("Error al copiar de forma automática. Intenta seleccionar el texto manualmente.");
+            }});
+        }} else {{
+            // Método antiguo de emergencia por si falla en navegadores viejos
+            var textArea = document.createElement("textarea");
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.select();
+            try {{
+                document.execCommand('copy');
+                alert("✨ ¡Lista copiada al portapapeles! Ya puedes ir a Google Keep y pegar.");
+            }} catch (err) {{
+                alert("No se pudo copiar.");
+            }}
+            document.body.removeChild(textArea);
+        }}
+    }}
+    </script>
+    """
+    
+    # Renderizamos el botón nativo en la app
+    st.components.v1.html(componente_copiar_html, height=70)
+    
 else:
     st.info("💡 Incrementa la cantidad de los productos que te falten en casa para generar la lista.")
