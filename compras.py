@@ -19,7 +19,7 @@ st.markdown("""
         padding-top: 2rem !important;
         padding-bottom: 2rem !important;
     }
-    /* Estilo para nuestro nuevo botón real de copiar */
+    /* Estilo para nuestro botón real de copiar */
     .boton-copiar {
         width: 100%;
         background-color: #4CAF50;
@@ -39,7 +39,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# 1. Tu lista de compras organizada por categorías
+# 1. Tu lista de compras organizada por categorías (Con Café y Arroz congelado añadidos)
 PRODUCTOS_POR_CATEGORIA = {
     "🥩 Frescos, Carne y Huevos": [
         "Huevos", "Pechuga de pollo", "Pavo lonchas", "Mantequilla", "Keffir"
@@ -52,11 +52,11 @@ PRODUCTOS_POR_CATEGORIA = {
         "Cebollas", "Tomate ensalada", "Lechuga"
     ],
     "🧊 Congelados y Platos Preparados": [
-        "Cebolla congelada", "Patatas congeladas", "Patatas conill", "Pure de verduras", 
+        "Cebolla congelada", "Arroz congelado", "Patatas congeladas", "Patatas conill", "Pure de verduras", 
         "Ensalada de pasta", "Pizzas", "Figuras merluza"
     ],
     "🥫 Despensa y Pasta": [
-        "Pan de molde", "Bagels", "Puré patata", "Tomate frito", "Tomate pasta", 
+        "Café", "Pan de molde", "Bagels", "Puré patata", "Tomate frito", "Tomate pasta", 
         "Macarrones", "Espaguetis", "Pasta estrella", "Mayonesa", "Ketchup", 
         "Paté finas hierbas"
     ],
@@ -112,11 +112,10 @@ if productos_seleccionados:
     
     texto_final = "\n".join(productos_seleccionados)
     
-    # Mostramos la lista en un cuadro de texto normal para que la veas
+    # Mostramos la lista en un cuadro de texto normal
     st.text_area("Tu lista actual:", value=texto_final, height=150, disabled=True)
     
-    # TRUCO: Inyectamos un botón nativo de HTML/JavaScript. 
-    # Este código se ejecuta 100% en tu iPhone y SÍ tiene permiso para copiar al portapapeles.
+    # Botón nativo HTML/JS para saltarse las restricciones de copia en móviles
     componente_copiar_html = f"""
     <input type="hidden" id="textoParaCopiar" value="{texto_final}">
     <button class="boton-copiar" onclick="copiarAlPortapapeles()">📋 COPIAR LISTA COMPLETA</button>
@@ -125,7 +124,6 @@ if productos_seleccionados:
     function copiarAlPortapapeles() {{
         var text = document.getElementById("textoParaCopiar").value;
         
-        // Intento con la API moderna de portapapeles
         if (navigator.clipboard && navigator.clipboard.writeText) {{
             navigator.clipboard.writeText(text).then(function() {{
                 alert("✨ ¡Lista copiada al portapapeles! Ya puedes ir a Google Keep y pegar.");
@@ -133,7 +131,6 @@ if productos_seleccionados:
                 alert("Error al copiar de forma automática. Intenta seleccionar el texto manualmente.");
             }});
         }} else {{
-            // Método antiguo de emergencia por si falla en navegadores viejos
             var textArea = document.createElement("textarea");
             textArea.value = text;
             document.body.appendChild(textArea);
@@ -150,7 +147,6 @@ if productos_seleccionados:
     </script>
     """
     
-    # Renderizamos el botón nativo en la app
     st.components.v1.html(componente_copiar_html, height=70)
     
 else:
