@@ -39,20 +39,21 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# 1. Tu lista de compras organizada por categorías (Con Café y Arroz congelado añadidos)
+# 1. Tu lista de compras organizada por categorías (Con los nuevos productos añadidos)
 PRODUCTOS_POR_CATEGORIA = {
     "🥩 Frescos, Carne y Huevos": [
         "Huevos", "Pechuga de pollo", "Pavo lonchas", "Mantequilla", "Keffir"
     ],
     "🧀 Quesos y Lácteos": [
         "Queso lonchas cremoso", "Cuatro quesos", "Queso roquefort", "Queso de cabra",
-        "Yogur stracciatella", "Yogur griego", "Nata Cocinar"
+        "Yogur stracciatella", "Yogur griego", "Yogures mango", "Nata Cocinar"
     ],
     "🥬 Frutería y Verduras": [
-        "Cebollas", "Tomate ensalada", "Lechuga"
+        "Cebollas", "Tomate ensalada", "Lechuga", "Ensalada césar"
     ],
     "🧊 Congelados y Platos Preparados": [
-        "Cebolla congelada", "Arroz congelado", "Patatas congeladas", "Patatas conill", "Pure de verduras", 
+        "Cebolla congelada", "Arroz congelado", "Salteado rústico", "Salteado verduras",
+        "Patatas congeladas", "Patatas conill", "Pure de verduras", 
         "Ensalada de pasta", "Pizzas", "Figuras merluza"
     ],
     "🥫 Despensa y Pasta": [
@@ -115,7 +116,7 @@ if productos_seleccionados:
     # Mostramos la lista en un cuadro de texto normal
     st.text_area("Tu lista actual:", value=texto_final, height=150, disabled=True)
     
-    # Botón nativo HTML/JS para saltarse las restricciones de copia en móviles
+    # Botón nativo HTML/JS para copiar al portapapeles
     componente_copiar_html = f"""
     <input type="hidden" id="textoParaCopiar" value="{texto_final}">
     <button class="boton-copiar" onclick="copiarAlPortapapeles()">📋 COPIAR LISTA COMPLETA</button>
