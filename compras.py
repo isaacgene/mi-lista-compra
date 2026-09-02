@@ -39,7 +39,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# 1. Tu lista de compras organizada por categorías (Con los nuevos productos añadidos)
+# 1. Tu lista de compras organizada por categorías (Con Crema de cacahuete y Mermelada de fresa)
 PRODUCTOS_POR_CATEGORIA = {
     "🥩 Frescos, Carne y Huevos": [
         "Huevos", "Pechuga de pollo", "Pavo lonchas", "Mantequilla", "Keffir"
@@ -57,9 +57,9 @@ PRODUCTOS_POR_CATEGORIA = {
         "Ensalada de pasta", "Pizzas", "Figuras merluza"
     ],
     "🥫 Despensa y Pasta": [
-        "Café", "Pan de molde", "Bagels", "Puré patata", "Tomate frito", "Tomate pasta", 
-        "Macarrones", "Espaguetis", "Pasta estrella", "Mayonesa", "Ketchup", 
-        "Paté finas hierbas"
+        "Café", "Crema de cacahuete", "Mermelada de fresa", "Pan de molde", "Bagels", 
+        "Puré patata", "Tomate frito", "Tomate pasta", "Macarrones", "Espaguetis", 
+        "Pasta estrella", "Mayonesa", "Ketchup", "Paté finas hierbas"
     ],
     "🍫 Snacks y Postres": [
         "Crema Catalana", "Natillas", "Tableta chocolate", "Patatas bolsa", "Palomitas"
