@@ -39,7 +39,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# 1. Tu lista de compras organizada por categorías (Con Crema de cacahuete y Mermelada de fresa)
+# 1. Tu lista de compras organizada por categorías (Con Servilletas añadidas)
 PRODUCTOS_POR_CATEGORIA = {
     "🥩 Frescos, Carne y Huevos": [
         "Huevos", "Pechuga de pollo", "Pavo lonchas", "Mantequilla", "Keffir"
@@ -68,7 +68,7 @@ PRODUCTOS_POR_CATEGORIA = {
         "Zumos", "Botellas de agua pequeñas", "Garrafas de agua", "CocaCola Zero", "Tónica", "Cerveza"
     ],
     "🧼 Higiene y Limpieza": [
-        "Salvaslips", "Papel higiénico", "Papel cocina", "Desodorante", "Toallitas desmaquillantes",
+        "Salvaslips", "Papel higiénico", "Papel cocina", "Servilletas", "Desodorante", "Toallitas desmaquillantes",
         "Lavavajillas", "Toallitas antitransferencia", "Toallitas WC", "Toallitas húmedas"
     ]
 }
